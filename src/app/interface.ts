@@ -11,20 +11,35 @@ export interface Topic {
   id: number;
   name: string;
 }
-export interface UserData {
+export interface User {
   name: string;
   email: string;
   bio: string | null;
   avatar: string;
 }
 
+export interface UserData {
+  token: string;
+  user:User
+}
+
+export interface Message {
+  id: number;
+  user: User; // Simplified user data
+  body: string;
+  created: string;
+  update: string;
+}
+
+
 export interface Room {
   id: number;
-  host: UserData;
+  host: User;
   name: string;
   description: string;
   update: string;
   created: string;
   topic: Topic;
   participants: number[];
+  messages: Message[]; // Add messages to the Room interface
 }

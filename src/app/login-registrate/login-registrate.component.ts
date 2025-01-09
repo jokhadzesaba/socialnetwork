@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 const passwordMatchValidator: ValidatorFn = (
   formGroup: AbstractControl
@@ -46,7 +47,7 @@ export class LoginRegistrateComponent implements OnInit {
   public email = ''
   public password = ''
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private userService:UserService) {
+  constructor(private fb: FormBuilder, private authService: AuthService,private userService:UserService,private localStorage:LocalStorageService,) {
     this.registerForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -89,8 +90,8 @@ export class LoginRegistrateComponent implements OnInit {
         (res) => {
           alert('Login Successful');
           this.loginForm.reset();
-          localStorage.setItem('token',res.token)
-          this.userService.getUser()
+          this.localStorage.setItem('user',res)
+          this.userService.updateUser(res)
         },
         () => {
           alert('Login Failed');

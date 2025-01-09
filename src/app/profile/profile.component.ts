@@ -19,10 +19,6 @@ export class ProfileComponent implements OnInit {
   public user?:Observable<UserData>
   
   ngOnInit(): void {
-    this.userService.getUser().subscribe(res=>{
-      console.log(res);
-      
-    })
+  
   }
-
 }
