@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { Router } from '@angular/router';
 
 const passwordMatchValidator: ValidatorFn = (
   formGroup: AbstractControl
@@ -30,7 +30,7 @@ const passwordMatchValidator: ValidatorFn = (
 @Component({
   selector: 'app-login-registrate',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login-registrate.component.html',
   styleUrl: './login-registrate.component.scss',
 })
@@ -44,10 +44,15 @@ export class LoginRegistrateComponent implements OnInit {
     'repeatPassword',
   ];
   login = false;
-  public email = ''
-  public password = ''
+  public email = '';
+  public password = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private userService:UserService,private localStorage:LocalStorageService,) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+    private router:Router
+  ) {
     this.registerForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -57,12 +62,10 @@ export class LoginRegistrateComponent implements OnInit {
       },
       { validators: passwordMatchValidator }
     );
-    this.loginForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]],
-      },
-    );  
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
   }
   ngOnInit(): void {}
   onSubmit() {
@@ -90,8 +93,8 @@ export class LoginRegistrateComponent implements OnInit {
         (res) => {
           alert('Login Successful');
           this.loginForm.reset();
-          this.localStorage.setItem('user',res)
-          this.userService.updateUser(res)
+          this.userService.updateUser(res);
+          this.router.navigate(["/room-form"])
         },
         () => {
           alert('Login Failed');

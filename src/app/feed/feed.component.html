@@ -1,4 +1,7 @@
-<h1>room</h1>
+
+<div>
+  <button>Create Room</button>
+</div>
 <div *ngFor="let room of rooms | async" class="roomListRoom">
   <div class="roomListRoom__header">
     <a routerLink="" class="roomListRoom__author">
@@ -13,7 +16,7 @@
     </div>
   </div>
   <div class="roomListRoom__content">
-    <a href="">{{ room.name }}</a>
+    <a [routerLink]="['/room', room.id]">{{ room.name }}</a>
     <!-- {% url "room" room.id %} -->
     <p>
       {{ room.description }}

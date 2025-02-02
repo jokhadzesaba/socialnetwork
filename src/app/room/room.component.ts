@@ -3,21 +3,31 @@ import { ApiService } from '../services/api.service';
 import { map, Observable } from 'rxjs';
 import { Room, User } from '../interface';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-room',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './room.component.html',
   styleUrl: './room.component.scss',
 })
 export class RoomComponent implements OnInit {
   public roomData?: Observable<Room>;
   public participants?: Observable<User[]>;
-  constructor(private apiService: ApiService) {}
+  public roomId!: string; 
+  public message = "";
+  constructor(private apiService: ApiService,private route:ActivatedRoute) {}
   ngOnInit(): void {
-    this.roomData = this.apiService.getRoomById('4');
-    this.participants = this.apiService.getRoomById('4').pipe(
+    this.getRoomInfo()
+    
+  }
+
+  getRoomInfo(){
+    this.roomId = this.route.snapshot.paramMap.get('id')!
+    this.roomData = this.apiService.getRoomById(this.roomId);
+    this.participants = this.apiService.getRoomById(this.roomId).pipe(
       map((res) => {
         const participants: User[] = [];
         const seenEmails = new Set<string>();
@@ -30,5 +40,12 @@ export class RoomComponent implements OnInit {
         return participants;
       })
     );
+  }
+  postMessage(){
+    console.log('request sent');
+    
+    this.apiService.postMessage(this.message,this.roomId).subscribe(()=>{
+      this.getRoomInfo()
+    })
   }
 }

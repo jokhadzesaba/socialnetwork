@@ -2,7 +2,6 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserData } from '../interface';
-import { LocalStorageService } from './local-storage.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -22,7 +21,7 @@ export class UserService {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private http: HttpClient,
-    private localStorage: LocalStorageService
+    
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.token = localStorage.getItem('token');

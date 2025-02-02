@@ -124,17 +124,17 @@
           </div>
           <div class="room__message">
             <form method="POST"> 
-              <!-- {% csrf_token %} -->
-              <input name="body" placeholder="Write your message here..." />
+
+              <input (keyup.enter)="postMessage()" [(ngModel)]="message" name="body" placeholder="Write your message here..." />
             </form>
           </div>
         </div>
         <!-- Room End -->
 
         <!--   Start -->
-        <div *ngFor="let participant of participants|async; let list" class="participants">
+        <div  class="participants">
           <h3 class="participants__top">Participants <span>{{(participants|async)?.length}}</span></h3>
-          <div class="participants__list scroll">
+          <div *ngFor="let participant of participants|async; let list" class="participants__list scroll">
             <!-- {% for participant in participants %} -->
             <a href="" class="participant">
               <div class="avatar avatar--medium">
