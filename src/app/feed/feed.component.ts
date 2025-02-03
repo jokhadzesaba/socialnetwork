@@ -19,6 +19,9 @@ export class FeedComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.rooms = this.apiService.getRooms()
+    this.apiService.topicName.subscribe(res=>{
+      this.rooms = this.apiService.getRoomsByTopic(res)
+    })
+    // this.rooms = this.apiService.getRoomsByTopic(this.apiService.topicName.value)
   }
 }

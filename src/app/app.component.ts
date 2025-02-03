@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ActivityComponent } from './activity/activity.component';
 import { TopicsComponent } from "./topics/topics.component";
+import { FeedComponent } from "./feed/feed.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavigationComponent, RouterOutlet, TopicsComponent, ActivityComponent],
+  imports: [NavigationComponent, RouterOutlet, TopicsComponent, ActivityComponent, FeedComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

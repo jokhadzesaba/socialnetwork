@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Room, TopicWithCount, UserData } from '../interface';
-import { map, switchMap, take } from 'rxjs';
+import { BehaviorSubject, map, switchMap, take } from 'rxjs';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { UserService } from './user.service';
 })
 export class ApiService {
   private url = 'http://127.0.0.1:8000/api';
+  public topicName = new BehaviorSubject<string>('All');
 
   constructor(private http: HttpClient, private user: UserService) {}
 
@@ -17,6 +18,9 @@ export class ApiService {
   }
   public getRooms() {
     return this.http.get<Room[]>(`${this.url}/rooms`);
+  }
+  public getRoomsByTopic(topicName:string){
+    return this.http.get<Room[]>(`${this.url}/topic/${topicName}`);
   }
   public getRoomById(id: string) {
     return this.http.get<Room>(`${this.url}/room/${id}`);

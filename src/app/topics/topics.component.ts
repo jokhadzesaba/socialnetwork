@@ -18,4 +18,7 @@ export class TopicsComponent implements OnInit{
   ngOnInit(): void {
     this.topics = this.apiService.getTopics()
   }
+  filterBytopic(topicName:string){
+      this.apiService.topicName.next(topicName)
+  }
 }

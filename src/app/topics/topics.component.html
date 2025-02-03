@@ -1,22 +1,16 @@
-
-<div *ngIf="topics|async" class="topics">
-    <div class="topics__header">
-      <h2>Browse Topics</h2>
+<div *ngIf="topics | async" class="topics">
+  <div class="topics__header">
+    <h2>Browse Topics</h2>
+  </div>
+  <div class="topic-list">
+    <a (click)="filterBytopic('All')" class="active">All <span>0</span></a>
+    <div *ngFor="let topic of topics | async">
+      <a (click)="filterBytopic(topic.topic.name)" class="active"
+        >{{ topic.topic.name }} <span>{{ topic.count }}</span></a
+      >
     </div>
-    <ul class="topics__list">
-      <li>
-        <a href="{% url 'home' %}" class="active">All <span>count</span></a>
-      </li>
-      <!-- {% for topic in topics %} -->
-
-      <li *ngFor="let topic of topics|async">
-        <a  href="" class="active">{{topic.topic.name}} <span>{{topic.count}}</span></a>
-        <!-- {% url 'home'%}?q={{topic.topic}} -->
-      </li>
-      <!-- {% endfor %} -->
-    </ul>
     <a class="btn btn--link" href="">
-        <!-- url "topics" %} -->
+      <!-- url "topics" %} -->
       More
       <svg
         version="1.1"
@@ -30,3 +24,7 @@
       </svg>
     </a>
   </div>
+
+  <!-- {% url 'home'%}?q={{topic.topic}} -->
+
+</div>
