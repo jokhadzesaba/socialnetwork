@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Room, TopicWithCount, UserData } from '../interface';
+import { Activity, Room, TopicWithCount, UserData } from '../interface';
 import { BehaviorSubject, map, switchMap, take } from 'rxjs';
 import { UserService } from './user.service';
 
@@ -10,6 +10,8 @@ import { UserService } from './user.service';
 export class ApiService {
   private url = 'http://127.0.0.1:8000/api';
   public topicName = new BehaviorSubject<string>('All');
+  public searchParam = new BehaviorSubject<string>('');
+  public activityParam = new BehaviorSubject<string>('All');
 
   constructor(private http: HttpClient, private user: UserService) {}
 
@@ -19,11 +21,18 @@ export class ApiService {
   public getRooms() {
     return this.http.get<Room[]>(`${this.url}/rooms`);
   }
-  public getRoomsByTopic(topicName:string){
+  public getRoomsByTopic(topicName: string) {
     return this.http.get<Room[]>(`${this.url}/topic/${topicName}`);
+  }
+  public searchRooms(searchParam: string) {
+    return this.http.get<Room[]>(`${this.url}/search/${searchParam}`);
   }
   public getRoomById(id: string) {
     return this.http.get<Room>(`${this.url}/room/${id}`);
+  }
+  public getActivity(searchParam: string) {
+      return this.http.get<Activity[]>(`${this.url}/activity/${searchParam}`,);
+    
   }
   public createRoom(topic: string, name: string, description: string) {
     return this.user.userData$.pipe(
@@ -39,7 +48,7 @@ export class ApiService {
       })
     );
   }
-  public postMessage(message:string,roomId:string){
+  public postMessage(message: string, roomId: string) {
     return this.user.userData$.pipe(
       take(1),
       switchMap((userData: UserData) => {

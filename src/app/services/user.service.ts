@@ -11,12 +11,12 @@ export class UserService {
   private apiUrl = 'http://127.0.0.1:8000/api';
   token: string | null = null;
   header: HttpHeaders = new HttpHeaders();
-
   public userData = new BehaviorSubject<UserData>({
     token: '',
     user: { name: '', email: '', bio: '', avatar: '' },
   });
   public userData$ = this.userData.asObservable();
+  public userLogged = false
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -27,6 +27,15 @@ export class UserService {
       this.token = localStorage.getItem('token');
       this.header = new HttpHeaders({ Authorization: `Token ${this.token}` });
     }
+  }
+  savedUser(){
+    const user = localStorage.getItem('user')
+    if (user) {
+      const parsedUser = JSON.parse(user)
+      this.userData.next(parsedUser)
+      this.userLogged = true
+    }
+    
   }
 
   getUser() {

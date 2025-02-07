@@ -15,6 +15,7 @@ import {
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { UserData } from '../interface';
 
 const passwordMatchValidator: ValidatorFn = (
   formGroup: AbstractControl
@@ -90,11 +91,13 @@ export class LoginRegistrateComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.loginUser({ email, password }).subscribe(
-        (res) => {
+        (res:UserData) => {
           alert('Login Successful');
           this.loginForm.reset();
-          this.userService.updateUser(res);
-          this.router.navigate(["/room-form"])
+          this.userService.updateUser(res);          
+          localStorage.setItem('user', JSON.stringify(res))
+          this.userService.userLogged = true
+          this.router.navigate(["/feed"])
         },
         () => {
           alert('Login Failed');

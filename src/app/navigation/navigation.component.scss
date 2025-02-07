@@ -10,6 +10,7 @@
   
   .header__logo,
   .header__user {
+    cursor: pointer;
     display: flex;
     gap: 2rem;
     align-items: center;

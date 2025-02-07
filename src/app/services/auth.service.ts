@@ -7,7 +7,7 @@ import { User, UserData } from '../interface';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/api/'; // Backend API endpoint
+  private apiUrl = 'http://127.0.0.1:8000/api/';
 
   constructor(private http: HttpClient) {}
 

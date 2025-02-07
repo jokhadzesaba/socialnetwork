@@ -20,7 +20,7 @@ export interface User {
 
 export interface UserData {
   token: string;
-  user:User
+  user: User;
 }
 
 export interface Message {
@@ -31,7 +31,18 @@ export interface Message {
   update: string;
 }
 
-
+export interface Room2 {
+  id: number;
+  name: string;
+}
+export interface Activity {
+  id: number;
+  user: User;
+  room: Room2;
+  body: string;
+  update: string;
+  created: string;
+}
 export interface Room {
   id: number;
   host: User;
@@ -40,6 +51,6 @@ export interface Room {
   update: string;
   created: string;
   topic: Topic;
-  participants: number[];
+  participants: number;
   messages: Message[]; // Add messages to the Room interface
 }

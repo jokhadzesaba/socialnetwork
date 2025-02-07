@@ -20,5 +20,6 @@ export class TopicsComponent implements OnInit{
   }
   filterBytopic(topicName:string){
       this.apiService.topicName.next(topicName)
+      this.apiService.activityParam.next(topicName)
   }
 }

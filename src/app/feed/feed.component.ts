@@ -4,6 +4,7 @@ import { Room } from '../interface';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-feed',
@@ -14,14 +15,20 @@ import { RouterLink } from '@angular/router';
 })
 export class FeedComponent implements OnInit {
   rooms?: Observable<Room[]>;
+  length = 0
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,private userService:UserService) {}
 
 
   ngOnInit(): void {
+    this.userService.savedUser()
+    this.apiService.searchParam.subscribe(res=>{
+      this.rooms = this.apiService.searchRooms(res)
+    })
     this.apiService.topicName.subscribe(res=>{
       this.rooms = this.apiService.getRoomsByTopic(res)
     })
-    // this.rooms = this.apiService.getRoomsByTopic(this.apiService.topicName.value)
+
+    
   }
 }

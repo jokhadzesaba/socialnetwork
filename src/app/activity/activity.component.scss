@@ -1,7 +1,7 @@
 .activities {
     background: var(--color-dark);
-    border-radius: 5px;
-    overflow: hidden;
+    margin-top: 20px;
+    
   }
   
   .activities__header h2 {
@@ -37,6 +37,7 @@
   }
   
   .activities__boxContent {
+    margin-left: 0px;
     font-size: 1.4rem;
   }
   
@@ -49,7 +50,7 @@
     padding: 1rem;
     border-radius: 5px;
     margin-top: 1rem;
-    margin-left: -4.2rem;
+    
   }
   
   .roomListRoom__actions svg {

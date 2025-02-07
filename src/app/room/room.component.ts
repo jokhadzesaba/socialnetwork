@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { map, Observable } from 'rxjs';
-import { Room, User } from '../interface';
+import { Room, User, UserData } from '../interface';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-room',
@@ -18,10 +19,12 @@ export class RoomComponent implements OnInit {
   public participants?: Observable<User[]>;
   public roomId!: string; 
   public message = "";
-  constructor(private apiService: ApiService,private route:ActivatedRoute) {}
+  public userData!: Observable<UserData>;
+  constructor(private apiService: ApiService,private route:ActivatedRoute,private userService:UserService) {}
   ngOnInit(): void {
     this.getRoomInfo()
-    
+    this.userService.savedUser();
+    this.userData = this.userService.getUser();
   }
 
   getRoomInfo(){

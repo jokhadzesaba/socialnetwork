@@ -1,13 +1,34 @@
 
-<div>
-  <button>Create Room</button>
+<div class="info">
+  <div>
+    <p>Study Room</p>
+    <p>{{(rooms|async)?.length}} Rooms Avaliable</p>
+    
+  </div>
+  <div>
+    <button [routerLink]="['/room-form']" class="btn btn--main" href="{% url 'create-room' %}">
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+      >
+        <title>add</title>
+        <path
+          d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z"
+        ></path>
+      </svg>
+      Create Room
+    </button>
+  </div>
 </div>
 <div *ngFor="let room of rooms | async" class="roomListRoom">
   <div class="roomListRoom__header">
     <a routerLink="" class="roomListRoom__author">
       <!-- {% url "profile" room.host.id %} -->
       <div class="avatar avatar--small">
-        <!-- <img [src]="room.host.user.avatar" /> -->
+        <img [src]="room.host.avatar" />
       </div>
       <span>{{ room.host.name }}</span>
     </a>
@@ -46,10 +67,8 @@
           d="M12 16c3.859 0 7-3.141 7-7s-3.141-7-7-7c-3.859 0-7 3.141-7 7s3.141 7 7 7zM12 4c2.757 0 5 2.243 5 5s-2.243 5-5 5-5-2.243-5-5c0-2.757 2.243-5 5-5z"
         ></path>
       </svg>
-       {{ room.participants }}
+       {{ room.participants}}
     </a>
     <p class="roomListRoom__topic">{{ room.topic.name }}</p>
   </div>
 </div>
-<!-- {% endfor %} -->
-<!-- </div> -->
