@@ -42,7 +42,7 @@ export class LoginRegistrateComponent implements OnInit {
     'username',
     'email',
     'password',
-    'repeatPassword',
+    'Repeat Password',
   ];
   login = false;
   public email = '';

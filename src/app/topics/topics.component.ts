@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Topic, TopicWithCount } from '../interface';
 
@@ -12,11 +12,15 @@ import { Topic, TopicWithCount } from '../interface';
   styleUrl: './topics.component.scss'
 })
 export class TopicsComponent implements OnInit{
-  topics!:Observable<TopicWithCount[]>
+  public topics!:Observable<TopicWithCount[]>
+  public countAll = 0
   constructor(private apiService:ApiService){
   }
   ngOnInit(): void {
-    this.topics = this.apiService.getTopics()
+    this.topics = this.apiService.getTopics().pipe(tap((res:TopicWithCount[])=>{
+      this.countAll = 0
+      res.forEach(x => this.countAll+=x.count)
+    }))
   }
   filterBytopic(topicName:string){
       this.apiService.topicName.next(topicName)

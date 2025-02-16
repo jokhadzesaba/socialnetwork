@@ -8,7 +8,7 @@ import { FeedComponent } from "./feed/feed.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavigationComponent, RouterOutlet, TopicsComponent, ActivityComponent, FeedComponent],
+  imports: [NavigationComponent, RouterOutlet, TopicsComponent, ActivityComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
