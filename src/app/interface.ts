@@ -27,6 +27,7 @@ export interface Message {
   id: number;
   user: User; // Simplified user data
   body: string;
+  roomPhoto:string;
   created: string;
   update: string;
 }
@@ -48,6 +49,7 @@ export interface Room {
   host: User;
   name: string;
   description: string;
+  roomPhoto:string;
   update: string;
   created: string;
   topic: Topic;

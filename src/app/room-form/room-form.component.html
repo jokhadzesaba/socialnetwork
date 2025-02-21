@@ -5,6 +5,10 @@
   <div class="form-container">
     <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
       <label
+      >Room Photo
+      <input formControlName="roomPhoto" type="file" />
+    </label>
+      <label
         >Room Topic
         <input formControlName="roomTopic" type="text" />
       </label>
@@ -18,7 +22,7 @@
       </label>
     </form>
     <div class="buttons">
-      <button>Cancel</button>
+      <button [routerLink]="'/feed'" >Cancel</button>
       <button (click)="onSubmit()" type="submit">Submit</button>
     </div>
   </div>

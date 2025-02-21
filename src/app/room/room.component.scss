@@ -1,6 +1,13 @@
 
+.main-container{
+  display: flex;
+  // justify-content: space-between;
+  justify-content: center;
+  height: 1000px;
+}
 .room{
   width: 700px;
+  
 }
 .participants{
   width: 360px;
@@ -76,7 +83,7 @@
   position: absolute;
   width: 95%;
   background: var(--color-dark);
-  z-index: 999;
+  // z-index: 999;
   top: 4.4rem;
   padding-top: 2rem;
   padding-bottom: 1rem;
@@ -117,6 +124,10 @@
   font-weight: 500;
   color: var(--color-main);
 }
+// .room__hosted{
+//   display: flex;
+//   flex-direction: column;
+// }
 
 .room__hosted p {
   text-transform: uppercase;
@@ -128,13 +139,37 @@
 
 .room__author {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  align-items: center;
+  // align-items: center;
   margin-bottom: 1rem;
   transition: all 0.3s ease-in-out;
+  >.avatar{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+  }
+  img{
+    width: 100%;
+    
+  }
 }
+.image__host{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  >.img{
+    img{
+      width: 100px;
+      height: 100px;
 
-.room__author:hover {
+    }
+  }
+}
+.avatar:hover {
   text-decoration: underline;
 }
 

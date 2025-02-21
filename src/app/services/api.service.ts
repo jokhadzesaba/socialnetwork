@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Activity, Room, TopicWithCount, UserData } from '../interface';
 import { BehaviorSubject, map, switchMap, take } from 'rxjs';
 import { UserService } from './user.service';
+import { Url } from 'node:url';
 
 @Injectable({
   providedIn: 'root',
@@ -34,20 +35,16 @@ export class ApiService {
       return this.http.get<Activity[]>(`${this.url}/activity/${searchParam}`,);
     
   }
-  public createRoom(topic: string, name: string, description: string) {
+  public createRoom(formData: FormData) {
     return this.user.userData$.pipe(
       take(1),
       switchMap((userData: UserData) => {
-        const email = userData.user.email;
-        return this.http.post(`${this.url}/create-room`, {
-          topic,
-          name,
-          description,
-          email,
-        });
+        formData.append('email', userData.user.email); // Append email dynamically
+        return this.http.post(`${this.url}/create-room`, formData);
       })
     );
   }
+  
   public postMessage(message: string, roomId: string) {
     return this.user.userData$.pipe(
       take(1),

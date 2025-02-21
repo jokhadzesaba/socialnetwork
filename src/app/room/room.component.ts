@@ -7,6 +7,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { WebSocketService } from '../services/web-socket.service';
+import { TopicsComponent } from "../topics/topics.component";
 
 @Component({
   selector: 'app-room',
@@ -16,6 +17,7 @@ import { WebSocketService } from '../services/web-socket.service';
   styleUrl: './room.component.scss',
 })
 export class RoomComponent implements OnInit {
+
   public roomData?: Observable<Room>;
   public participants?: Observable<User[]>;
   public roomId!: string;
@@ -30,39 +32,35 @@ export class RoomComponent implements OnInit {
   ) {}
   private destroy$ = new Subject<void>();
 
-ngOnInit(): void {
-  this.getRoomInfo();
-  this.userService.savedUser();
-  this.userData = this.userService.getUser();
-  window.scrollTo(0, 0);
+  ngOnInit(): void {
+    this.getRoomInfo();
+    this.userService.savedUser();
+    this.userData = this.userService.getUser();
+    window.scrollTo(0, 0);
 
-  // Listen for WebSocket messages
-  this.webSocketService.getMessages()
-    .pipe(takeUntil(this.destroy$)) // Unsubscribe on component destroy
-    .subscribe((message) => {
-      if (this.roomData) {
-        
-        this.roomData = this.roomData.pipe(
-          tap((room) => ({
-            ...room,
-            messages: [...room.messages, message],
-            
-             // Append new message
-          }))
-        );
-      }
-    });
-}
+    this.webSocketService
+      .getMessages()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((message) => {
+        if (this.roomData) {
+          this.roomData = this.roomData.pipe(
+            tap((room) => ({
+              ...room,
+              messages: [...room.messages, message],
+            }))
+          );
+        }
+      });
+  }
 
-ngOnDestroy(): void {
-  this.destroy$.next();
-  this.destroy$.complete();
-}
-  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   getRoomInfo() {
     this.roomId = this.route.snapshot.paramMap.get('id')!;
-    this.webSocketService.connect(this.roomId)
+    this.webSocketService.connect(this.roomId);
     this.roomData = this.apiService.getRoomById(this.roomId);
     this.participants = this.apiService.getRoomById(this.roomId).pipe(
       map((res) => {
@@ -92,5 +90,4 @@ ngOnDestroy(): void {
       }
     });
   }
-  
 }

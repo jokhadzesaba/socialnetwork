@@ -5,11 +5,13 @@ import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { TopicsComponent } from "../topics/topics.component";
+import { ActivityComponent } from "../activity/activity.component";
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink, TopicsComponent, ActivityComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })

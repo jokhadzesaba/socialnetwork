@@ -1,3 +1,4 @@
+
 <main *ngIf="roomData | async as room" class="profile-page layout layout--2">
   <div class="container">
     <!-- Room Start -->
@@ -67,31 +68,7 @@
             </svg>
           </a>
         </div>
-        <button
-          class="action-button"
-          data-id="120"
-          data-delete-url="https://randomuser.me/api/3324923"
-          data-edit-url="profile.html"
-        >
-          <svg
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-          >
-            <title>ellipsis-horizontal</title>
-            <path
-              d="M16 7.843c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 1.98c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z"
-            ></path>
-            <path
-              d="M16 19.908c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 14.046c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z"
-            ></path>
-            <path
-              d="M16 31.974c-2.156 0-3.908-1.753-3.908-3.908s1.753-3.908 3.908-3.908c2.156 0 3.908 1.753 3.908 3.908s-1.753 3.908-3.908 3.908zM16 26.111c-1.077 0-1.954 0.877-1.954 1.954s0.877 1.954 1.954 1.954c1.077 0 1.954-0.877 1.954-1.954s-0.877-1.954-1.954-1.954z"
-            ></path>
-          </svg>
-        </button>
+        
       </div>
       <div class="room__box scroll">
         <div class="room__header scroll">
@@ -99,17 +76,20 @@
             <h3>{{ room.name }}</h3>
             <span>{{ room.created | date }} ago</span>
           </div>
-          <div class="room__hosted">
-            <p>Hosted By</p>
-            <a href="" class="room__author">
-              <div class="avatar avatar--small">
-                <img [src]="room.host.avatar" />
-              </div>
-              <span>{{ room.host.email }}</span>
-            </a>
-          </div>
-          <div class="room__details">
-            {{ room.description }}
+          <div class="image__host">
+            <div class="room__hosted">
+              <a class="room__author">
+                <p>Hosted By</p>
+                <div class="avatar">
+                  <img [src]="room.host.avatar" />
+                  <span>{{ room.host.email }}</span>
+                </div>
+              </a>
+              <p>{{ room.description }}</p>
+            </div>
+            <div class="img">
+              <img [src]="room.roomPhoto" alt="img">
+            </div>
           </div>
           <span class="room__topics">{{ room.topic.name }}</span>
         </div>

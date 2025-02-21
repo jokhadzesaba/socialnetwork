@@ -48,9 +48,9 @@ body {
   min-height: 100vh;
 }
 
-img {
-  width: 100%;
-}
+// img {
+//   width: 100%;
+// }
 
 a {
   display: inline-block;
@@ -137,16 +137,6 @@ a {
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
-}
-
-.avatar::after {
-  content: "";
-  display: block;
-  position: absolute;
-  background-color: var(--color-gray);
-  z-index: 111;
-  border-radius: 50%;
-  border: 0.3rem solid var(--color-dark);
 }
 
 .avatar.active::after {

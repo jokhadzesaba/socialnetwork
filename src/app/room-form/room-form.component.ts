@@ -5,13 +5,13 @@ import { ApiService } from '../services/api.service';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs';
 import { UserData } from '../interface';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-room-form',
   standalone: true,
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink],
   templateUrl: './room-form.component.html',
   styleUrl: './room-form.component.scss'
 })
@@ -22,6 +22,7 @@ export class RoomFormComponent {
   constructor(private fb:FormBuilder,private apiService:ApiService,private userService:UserService,private router:Router){
      this.roomForm = this.fb.group(
       {
+        roomPhoto:[''],
         roomTopic: ['', [Validators.required,]],
         roomName: ['', [Validators.required]],
         roomDescription: ['', [Validators.required]],
@@ -31,13 +32,23 @@ export class RoomFormComponent {
   
   onSubmit() {
     if (this.userService.userLogged) {
-      const {roomTopic,roomName,roomDescription } = this.roomForm.value
-      this.apiService.createRoom(roomTopic,roomName,roomDescription).subscribe()
-      this.roomForm.reset()
-      this.router.navigate(['/feed'])
-    }else{
-      this.router.navigate(['/login_registrate'])
+      const formData = new FormData();
+      formData.append('roomTopic', this.roomForm.value.roomTopic);
+      formData.append('roomName', this.roomForm.value.roomName);
+      formData.append('roomDescription', this.roomForm.value.roomDescription);
+  
+      const fileInput = (document.querySelector('input[type="file"]') as HTMLInputElement);
+      if (fileInput.files && fileInput.files.length > 0) {
+        formData.append('roomPhoto', fileInput.files[0]); // Append file
+      }
+  
+      this.apiService.createRoom(formData).subscribe(() => {
+        this.roomForm.reset();
+        this.router.navigate(['/feed']);
+      });
+    } else {
+      this.router.navigate(['/login_registrate']);
     }
-    
-    }
+  }
+  
 }
