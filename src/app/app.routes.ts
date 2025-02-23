@@ -12,8 +12,8 @@ export const routes: Routes = [
   { path: 'delete', component: DeleteComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'login_registrate', component: LoginRegistrateComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: 'room/:id', component: RoomComponent },
   { path: 'room-form', component: RoomFormComponent },
   { path: 'topics-list', component: TopicsListComponent },
+  { path: 'profile/:id', component: ProfileComponent },
 ];

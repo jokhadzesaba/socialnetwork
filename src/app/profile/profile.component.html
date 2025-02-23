@@ -1,80 +1,38 @@
-<div *ngIf="user|async" class="profile-page layout layout--3">
+<div *ngIf="(user | async) as user" class="profile-page layout layout--3">
   <div class="container">
     <!-- Topics Start -->
-   <app-topics></app-topics>
+    <app-topics></app-topics>
     <!-- Room List Start -->
     <div class="roomList">
       <div class="profile">
         <div class="profile__avatar">
           <div class="avatar avatar--large active">
-            <img [src]="" />
-            
+            <img [src]="user.avatar" />
           </div>
         </div>
         <!-- {% if request.user.id == user.id %} -->
         <div class="profile__info">
-          <h3>{{user}}</h3>
-          <p>user</p>
+          <h3>{{ user.name }}</h3>
+          <p>{{user.email}}</p>
           <a href="" class="btn btn--main btn--pill">Edit Profile</a>
           <!-- {% url "update-user" %} -->
         </div>
         <!-- {% endif %} -->
         <div class="profile__about">
           <h3>About</h3>
-          <p>
-            user.bio
-          </p>
+          <p>{{user.bio}}</p>
         </div>
       </div>
 
       <div class="roomList__header">
         <div>
-          <h2>Study Rooms Hosted by dennis_ivy</h2>
+          <h2>Post Rooms Hosted by {{user.name}}</h2>
         </div>
       </div>
-      <app-feed></app-feed>
-    <!-- Room List End -->
-
+      <app-feed [showTopicsAndActivity]="false" [selectedProfileFeed]="user.id"></app-feed>
+      <!-- Room List End -->
+    </div>
     <!-- Activities Start -->
-    <div class="activities">
-      <div class="activities__header">
-        <h2>Recent Activities</h2>
-      </div>
-      
-      <div class="activities__box">
-        <div class="activities__boxHeader roomListRoom__header">
-          <a href="" class="roomListRoom__author">
-            <!-- {% url 'profile' user.id %} -->
-            <div class="avatar avatar--small">
-              <img src="" />
-              activity user avatar url
-            </div>
-            <p>
-              user.username
-              <span>activity.created ago</span>
-            </p>
-          </a>
-          <div class="roomListRoom__actions">
-            <a href="">
-                <!-- {% url "delete-message" activity.id %} -->
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                <title>delete</title>
-                <path
-                  d="M30 4h-8v-3c0-0.553-0.447-1-1-1h-10c-0.553 0-1 0.447-1 1v3h-8v2h2v24c0 1.104 0.897 2 2 2h20c1.103 0 2-0.896 2-2v-24h2v-2h-0zM12 2h8v2h-8v-2zM26.002 30l-0.002 1v-1h-20v-24h20v24h0.002z">
-                </path>
-              </svg>
-            </a>
-          </div>
-        </div>
-        <div class="activities__boxContent">
-          <p>replied to post “<a href="">activity.room</a>”</p>
-          <!-- {% url "room" activity.room.id %} -->
-          <div class="activities__boxRoomContent">
-           activity.body
-          </div>
-        </div>
-      </div>
-      <!-- {% endfor %} -->
-    <!-- Activities End -->
+    <app-activity></app-activity>
   </div>
 </div>

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,19 +8,21 @@ import { Subject, Observable } from 'rxjs';
 export class WebSocketService {
   private socket!: WebSocket;
   private messageSubject = new Subject<any>();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   connect(roomId: string) {
-    this.socket = new WebSocket(`ws://localhost:8000/ws/chat/${roomId}/`);
+    if (isPlatformBrowser(this.platformId)) {
+      this.socket = new WebSocket(`ws://localhost:8000/ws/chat/${roomId}/`);
 
-    this.socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      this.messageSubject.next(message); // Push received message
-    };
+      this.socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        this.messageSubject.next(message); // Push received message
+      };
 
-    this.socket.onopen = () => console.log('WebSocket connected!');
-    this.socket.onclose = () => console.log('WebSocket closed!');
+      this.socket.onopen = () => console.log('WebSocket connected!');
+      this.socket.onclose = () => console.log('WebSocket closed!');
+    }
   }
-
   sendMessage(data: { message: string; email: string }) {
     if (this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(data));

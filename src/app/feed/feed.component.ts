@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Room } from '../interface';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { TopicsComponent } from "../topics/topics.component";
-import { ActivityComponent } from "../activity/activity.component";
+import { TopicsComponent } from '../topics/topics.component';
+import { ActivityComponent } from '../activity/activity.component';
 
 @Component({
   selector: 'app-feed',
@@ -17,20 +17,28 @@ import { ActivityComponent } from "../activity/activity.component";
 })
 export class FeedComponent implements OnInit {
   rooms?: Observable<Room[]>;
-  length = 0
+  length = 0;
+  @Input() showTopicsAndActivity = true;
+  @Input() selectedProfileFeed?: number;
 
-  constructor(private apiService: ApiService,private userService:UserService) {}
-
+  constructor(
+    private apiService: ApiService, 
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.userService.savedUser()
-    this.apiService.searchParam.subscribe(res=>{
-      this.rooms = this.apiService.searchRooms(res)
-    })
-    this.apiService.topicName.subscribe(res=>{
-      this.rooms = this.apiService.getRoomsByTopic(res)
-    })
-
-    
+    this.userService.savedUser();
+    if (this.selectedProfileFeed) {
+      this.rooms = this.userService.getSelecetedUserFeed(
+        this.selectedProfileFeed
+      );
+    } else {
+      this.apiService.searchParam.subscribe((res) => {
+        this.rooms = this.apiService.searchRooms(res);
+      });
+      this.apiService.topicName.subscribe((res) => {
+        this.rooms = this.apiService.getRoomsByTopic(res);
+      });
+    }
   }
 }

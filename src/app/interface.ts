@@ -16,6 +16,7 @@ export interface User {
   email: string;
   bio: string | null;
   avatar: string;
+  id:number;
 }
 
 export interface UserData {

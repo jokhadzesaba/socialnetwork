@@ -150,11 +150,11 @@
         *ngFor="let participant of participants | async; let list"
         class="participants__list scroll"
       >
-        <a href="" class="participant">
+        <a [routerLink]="['/profile', participant.id]" class="participant">
           <div class="avatar avatar--medium">
             <img [src]="participant.avatar" />
           </div>
-          <p>
+          <p >
             {{ participant.name }}
             <span>{{ participant.email }}</span>
           </p>

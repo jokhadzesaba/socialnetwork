@@ -2,7 +2,7 @@
   <div class="container">
     <a [routerLink]="['/feed']" (click)="homePage()" class="header__logo">
       <img src="assets/images/logo.svg"  />
-      <h1>StudyBuddy</h1>
+      <h1>PostBuddy</h1>
     </a>
     <form class="header__search" method="GET" >
       <label>
@@ -24,12 +24,12 @@
     </form>
     <nav *ngIf="(userData|async) as user" class="header__menu">
       <div *ngIf="user.user.email" class="header__user">
-        <a href="">
+        <a [routerLink]="['/profile', user.user.id]">
           <div class="avatar avatar--medium active">
             <img [src]="user.user.avatar" /> 
           </div>
-          <p>
-            {{user.user.name}} <span>{{user.user.name}} </span>
+          <p [routerLink]="['/profile', user.user.id]">
+            {{user.user.name}} <span>{{user.user.email}} </span>
             
           </p>
         </a>

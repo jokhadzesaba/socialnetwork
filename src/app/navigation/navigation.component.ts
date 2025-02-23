@@ -51,7 +51,7 @@ export class NavigationComponent implements OnInit {
   logOut() {
     this.userervice.userData.next({
       token: '',
-      user: { name: '', email: '', bio: '', avatar: '' },
+      user: { name: '', email: '', bio: '', avatar: '',id:-1 },
     });
     this.userervice.userLogged = false;
     localStorage.removeItem('user');

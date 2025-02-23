@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Room, User, UserData } from '../interface';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { WebSocketService } from '../services/web-socket.service';
-import { TopicsComponent } from "../topics/topics.component";
+import { TopicsComponent } from '../topics/topics.component';
 
 @Component({
   selector: 'app-room',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './room.component.html',
   styleUrl: './room.component.scss',
 })
 export class RoomComponent implements OnInit {
-
   public roomData?: Observable<Room>;
   public participants?: Observable<User[]>;
   public roomId!: string;
@@ -28,7 +32,8 @@ export class RoomComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   private destroy$ = new Subject<void>();
 
@@ -36,7 +41,9 @@ export class RoomComponent implements OnInit {
     this.getRoomInfo();
     this.userService.savedUser();
     this.userData = this.userService.getUser();
-    window.scrollTo(0, 0);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo(0, 0);
+    }
 
     this.webSocketService
       .getMessages()
@@ -77,7 +84,7 @@ export class RoomComponent implements OnInit {
     );
   }
   postMessage() {
-    if (this.message.trim() === '') return; // Ignore empty messages
+    if (this.message.trim() === '') return;
     this.userData.subscribe((user) => {
       if (user) {
         const messageData = {
@@ -86,7 +93,7 @@ export class RoomComponent implements OnInit {
         };
         console.log('Sending message:', messageData);
         this.webSocketService.sendMessage(messageData);
-        this.message = ''; // Clear input
+        this.message = '';
       }
     });
   }

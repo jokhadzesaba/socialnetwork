@@ -8,11 +8,11 @@
           <div class="avatar avatar--small">
             <img [src]="activity.user.avatar" />
           </div>
-          <p>
+          <a [routerLink]="['/profile', activity.user.id]">
             
             {{activity.user.name}}
-            <span>created {{activity.created|date}}</span>
-          </p>
+            <p>created {{activity.created|date}}</p>
+          </a>
         </a>
         <!-- {% if request.user.id == activity.user.id %} -->
         <!-- <div class="roomListRoom__actions">

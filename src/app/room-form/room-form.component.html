@@ -1,23 +1,23 @@
 <div class="container">
   <div class="head">
-    <p>Create/Update Study Room</p>
+    <p>Create/Update Post Room</p>
   </div>
   <div class="form-container">
     <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
       <label
-      >Room Photo
+      >Post Photo
       <input formControlName="roomPhoto" type="file" />
     </label>
       <label
-        >Room Topic
+        >Post Topic
         <input formControlName="roomTopic" type="text" />
       </label>
       <label
-        >Room Name
+        >Post Name
         <input formControlName="roomName" type="text" />
       </label>
       <label
-        >Room Description
+        >Post Description
         <textarea formControlName="roomDescription"></textarea>
       </label>
     </form>

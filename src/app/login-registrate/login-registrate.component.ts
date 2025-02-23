@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, NgModule, OnInit, PLATFORM_ID } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -52,7 +52,8 @@ export class LoginRegistrateComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private router:Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.registerForm = this.fb.group(
       {
@@ -91,13 +92,15 @@ export class LoginRegistrateComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.loginUser({ email, password }).subscribe(
-        (res:UserData) => {
-          alert('Login Successful');
-          this.loginForm.reset();
-          this.userService.updateUser(res);          
-          localStorage.setItem('user', JSON.stringify(res))
-          this.userService.userLogged = true
-          this.router.navigate(["/feed"])
+        (res: UserData) => {
+          if (isPlatformBrowser(this.platformId)) {
+            alert('Login Successful');
+            this.loginForm.reset();
+            this.userService.updateUser(res);
+            localStorage.setItem('user', JSON.stringify(res));
+            this.userService.userLogged = true;
+            this.router.navigate(['/feed']);
+          }
         },
         () => {
           alert('Login Failed');

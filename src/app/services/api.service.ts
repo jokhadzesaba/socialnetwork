@@ -13,6 +13,7 @@ export class ApiService {
   public topicName = new BehaviorSubject<string>('All');
   public searchParam = new BehaviorSubject<string>('');
   public activityParam = new BehaviorSubject<string>('All');
+  
 
   constructor(private http: HttpClient, private user: UserService) {}
 
@@ -28,6 +29,7 @@ export class ApiService {
   public searchRooms(searchParam: string) {
     return this.http.get<Room[]>(`${this.url}/search/${searchParam}`);
   }
+  
   public getRoomById(id: string) {
     return this.http.get<Room>(`${this.url}/room/${id}`);
   }
