@@ -1,21 +1,28 @@
 <div class="activities">
-    <div class="activities__header">
-      <h2>Recent Activities</h2>
-    </div>
-    <div *ngFor="let activity of activities|async|slice:0:10" class="activities__box">
-      <div class="activities__boxHeader roomListRoom__header">
-        <a href="{% url 'profile' activity.user.id %}" class="roomListRoom__author">
-          <div class="avatar avatar--small">
-            <img [src]="activity.user.avatar" />
-          </div>
-          <a [routerLink]="['/profile', activity.user.id]">
-            
-            {{activity.user.name}}
-            <p>created {{activity.created|date}}</p>
-          </a>
-        </a>
-        <!-- {% if request.user.id == activity.user.id %} -->
-        <!-- <div class="roomListRoom__actions">
+  <div class="activities__header">
+    <h2>Recent Activities</h2>
+  </div>
+  <div
+    *ngFor="let activity of activities | async | slice : 0 : 10"
+    class="activities__box"
+  >
+    <div class="activities__boxHeader roomListRoom__header">
+      <a
+        [routerLink]="['/profile', activity.user.id]"
+        class="roomListRoom__author"
+      >
+        <div class="avatar avatar--small">
+          <img [src]="activity.user.avatar" />
+        </div>
+        <span>
+          <p>
+            {{ activity.user.name }}
+          </p>
+          <p>created {{ activity.created | date }}</p>
+        </span>
+      </a>
+      <!-- {% if request.user.id == activity.user.id %} -->
+      <!-- <div class="roomListRoom__actions">
           <a href="">
             url "delete-message" activity.id %
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -26,13 +33,18 @@
             </svg>
           </a>
         </div> -->
-        <!-- {% endif %} -->
-      </div>
-      <div class="activities__boxContent">
-        <p>replied to post “<a [routerLink]="['/room', activity.room.id]">{{activity.room.name}}</a>”</p>
-        <div class="activities__boxRoomContent">
-            {{activity.body}}
-        </div>
+      <!-- {% endif %} -->
+    </div>
+    <div class="activities__boxContent">
+      <p>
+        replied to post “<a [routerLink]="['/room', activity.room.id]">{{
+          activity.room.name
+        }}</a
+        >”
+      </p>
+      <div class="activities__boxRoomContent">
+        {{ activity.body }}
       </div>
     </div>
-    
+  </div>
+</div>

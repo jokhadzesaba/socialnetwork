@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { Room, User, UserData } from '../interface';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
@@ -85,7 +85,7 @@ export class RoomComponent implements OnInit {
   }
   postMessage() {
     if (this.message.trim() === '') return;
-    this.userData.subscribe((user) => {
+    this.userData.pipe(take(1)).subscribe((user) => {
       if (user) {
         const messageData = {
           message: this.message,

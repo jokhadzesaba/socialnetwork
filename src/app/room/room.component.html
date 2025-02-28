@@ -87,7 +87,7 @@
               </a>
               <p>{{ room.description }}</p>
             </div>
-            <div class="img">
+            <div *ngIf="room.roomPhoto" class="img">
               <img [src]="room.roomPhoto" alt="img">
             </div>
           </div>

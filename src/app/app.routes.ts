@@ -8,7 +8,7 @@ import { RoomFormComponent } from './room-form/room-form.component';
 import { TopicsListComponent } from './topics-list/topics-list.component';
 
 export const routes: Routes = [
-  
+  {path:'', redirectTo:'feed',pathMatch:'full'},
   { path: 'delete', component: DeleteComponent },
   { path: 'feed', component: FeedComponent },
   { path: 'login_registrate', component: LoginRegistrateComponent },
