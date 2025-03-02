@@ -60,4 +60,7 @@ export class ApiService {
       })
     );
   }
+  public deleteRoom(id:number){
+    return this.http.delete(`${this.url}/deleteRoom/${id}`)
+  }
 }

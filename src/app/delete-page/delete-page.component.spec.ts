@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopicsListComponent } from './topics-list.component';
+import { DeletePageComponent } from './delete-page.component';
 
-describe('TopicsListComponent', () => {
-  let component: TopicsListComponent;
-  let fixture: ComponentFixture<TopicsListComponent>;
+describe('DeletePageComponent', () => {
+  let component: DeletePageComponent;
+  let fixture: ComponentFixture<DeletePageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopicsListComponent]
+      imports: [DeletePageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TopicsListComponent);
+    fixture = TestBed.createComponent(DeletePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

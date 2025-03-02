@@ -31,7 +31,6 @@
     <div *ngFor="let room of rooms | async" class="roomListRoom">
       <div class="roomListRoom__header">
         <a [routerLink]="['/profile', room.host.id]" class="roomListRoom__author">
-          <!-- {% url "profile" room.host.id %} -->
           <div class="avatar avatar--small">
             <img [src]="room.host.avatar" />
           </div>

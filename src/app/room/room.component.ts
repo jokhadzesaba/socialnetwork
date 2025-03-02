@@ -97,4 +97,9 @@ export class RoomComponent implements OnInit {
       }
     });
   }
+  deleteRoom(id: number, name: string) {
+    this.router.navigate(['/deletePage'], { 
+      queryParams: { id: id, message: name } 
+    });
+  }
 }
