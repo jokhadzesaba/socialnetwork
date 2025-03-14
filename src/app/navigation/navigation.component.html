@@ -23,13 +23,13 @@
       </label>
     </form>
     <nav *ngIf="(userData|async) as user" class="header__menu">
-      <div *ngIf="user.user.email" class="header__user">
-        <a [routerLink]="['/profile', user.user.id]">
+      <div *ngIf="user.email" class="header__user">
+        <a [routerLink]="['/profile', user.id]">
           <div class="avatar avatar--medium active">
-            <img [src]="user.user.avatar" /> 
+            <img [src]="user.avatar" /> 
           </div>
-          <p [routerLink]="['/profile', user.user.id]">
-            {{user.user.name}} <span>{{user.user.email}} </span>
+          <p [routerLink]="['/profile', user.id]">
+            {{user.name}} <span>{{user.email}} </span>
             
           </p>
         </a>
@@ -46,12 +46,12 @@
           </svg>
         </button>
       </div>
-      <a *ngIf="user.user.email === ''" routerLink="/login_registrate">
+      <a *ngIf="user.email === ''" routerLink="/login_registrate">
         <img src="assets/images/avatar.svg" />
         <p>Login</p>
       </a>
       <div *ngIf="showSettings" class="dropdown-menu">
-        <button>
+        <button routerLink="/update-profile">
           <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"

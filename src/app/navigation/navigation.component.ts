@@ -7,7 +7,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs';
-import { UserData } from '../interface';
+import { User, UserData } from '../interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
@@ -21,18 +21,22 @@ import { ApiService } from '../services/api.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent implements OnInit {
-  public userData!: Observable<UserData>;
+  public userData!: Observable<User>;
   public searchParam = '';
   showSettings = false;
   constructor(
-    private userervice: UserService,
+    private userService: UserService,
     private apiService: ApiService,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.userervice.savedUser()
-    this.userData = this.userervice.getUser();
+    this.userData = this.userService.getUser();
+    this.userService.getUser().subscribe(res=>{
+      console.log(res);
+      
+    })
+    
   }
   settingsButtons() {
     this.showSettings = !this.showSettings;
@@ -49,11 +53,14 @@ export class NavigationComponent implements OnInit {
     }
   }
   logOut() {
-    this.userervice.userData.next({
-      token: '',
-      user: { name: '', email: '', bio: '', avatar: '',id:-1 },
+    this.userService.userData.next({
+      name: '',
+      email: '',
+      bio: '',
+      avatar: '',
+      id: -1,
     });
-    this.userervice.userLogged = false;
+    this.userService.userLogged = false;
     localStorage.removeItem('user');
     this.showSettings = false;
     this.cd.detectChanges();

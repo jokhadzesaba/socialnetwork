@@ -57,3 +57,4 @@ export interface Room {
   participants: number;
   messages: Message[]; // Add messages to the Room interface
 }
+export type UserWithoutId = Omit<User, 'id'>;

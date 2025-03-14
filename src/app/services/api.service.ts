@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Activity, Room, TopicWithCount, UserData } from '../interface';
+import { Activity, Room, TopicWithCount, User, UserData, UserWithoutId } from '../interface';
 import { BehaviorSubject, map, switchMap, take } from 'rxjs';
 import { UserService } from './user.service';
 import { Url } from 'node:url';
@@ -9,6 +9,7 @@ import { Url } from 'node:url';
   providedIn: 'root',
 })
 export class ApiService {
+  
   private url = 'http://127.0.0.1:8000/api';
   public topicName = new BehaviorSubject<string>('All');
   public searchParam = new BehaviorSubject<string>('');
@@ -40,8 +41,8 @@ export class ApiService {
   public createRoom(formData: FormData) {
     return this.user.userData$.pipe(
       take(1),
-      switchMap((userData: UserData) => {
-        formData.append('email', userData.user.email); // Append email dynamically
+      switchMap((userData: User) => {
+        formData.append('email', userData.email);
         return this.http.post(`${this.url}/create-room`, formData);
       })
     );
@@ -50,8 +51,8 @@ export class ApiService {
   public postMessage(message: string, roomId: string) {
     return this.user.userData$.pipe(
       take(1),
-      switchMap((userData: UserData) => {
-        const email = userData.user.email;
+      switchMap((userData: User) => {
+        const email = userData.email;
         return this.http.post(`${this.url}/create-message`, {
           message,
           roomId,
@@ -62,5 +63,8 @@ export class ApiService {
   }
   public deleteRoom(id:number){
     return this.http.delete(`${this.url}/deleteRoom/${id}`)
+  }
+  updateUser(data:UserWithoutId) {
+    return this.http.post(`${this.url}/update-profile`,data)
   }
 }

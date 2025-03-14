@@ -50,7 +50,6 @@ export class LoginRegistrateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private userService: UserService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -73,7 +72,7 @@ export class LoginRegistrateComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       const { email, password, username } = this.registerForm.value;
-      this.authService.register({ email, password, username }).subscribe(
+      this.userService.register({ email, password, username }).subscribe(
         () => {
           alert('Registration successful!');
           this.registerForm.reset();
@@ -91,15 +90,14 @@ export class LoginRegistrateComponent implements OnInit {
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.loginUser({ email, password }).subscribe(
+      this.userService.loginUser({ email, password }).subscribe(
         (res: UserData) => {
           if (isPlatformBrowser(this.platformId)) {
-            alert('Login Successful');
             this.loginForm.reset();
-            this.userService.updateUser(res);
-            localStorage.setItem('user', JSON.stringify(res));
             this.userService.userLogged = true;
             this.router.navigate(['/feed']);
+            this.userService.setToken(res.token);
+            this.userService.updateUser(res.user)
           }
         },
         () => {

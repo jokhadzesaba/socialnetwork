@@ -27,7 +27,6 @@ export class FeedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.savedUser();
     if (this.selectedProfileFeed) {
       this.rooms = this.userService.getSelecetedUserFeed(
         this.selectedProfileFeed

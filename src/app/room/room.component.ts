@@ -26,7 +26,7 @@ export class RoomComponent implements OnInit {
   public participants?: Observable<User[]>;
   public roomId!: string;
   public message = '';
-  public userData!: Observable<UserData>;
+  public userData!: Observable<User>;
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -89,7 +89,7 @@ export class RoomComponent implements OnInit {
       if (user) {
         const messageData = {
           message: this.message,
-          email: user.user.email,
+          email: user.email,
         };
         console.log('Sending message:', messageData);
         this.webSocketService.sendMessage(messageData);

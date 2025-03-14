@@ -1,0 +1,28 @@
+form {
+
+  label,div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    > a {
+      > span {
+        color: var(--color-light-gray);
+      }
+    }
+  }
+  >div:first-of-type{
+    button{
+        width: 8.5rem;
+        color: var(--color-light-gray);
+    }
+    margin-bottom: 20px;
+}
+  .form__action {
+    display: flex;
+    gap: 10px;
+    a,
+    button {
+      height: 35px;
+    }
+  }
+}

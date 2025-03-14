@@ -22,7 +22,7 @@
           <h3>Study Room</h3>
         </div>
         <div
-          *ngIf="room.host.email === (userData | async)?.user?.email"
+          *ngIf="room.host.email === (userData | async)?.email"
           class="room__topRight"
         >
           <a href="">
@@ -107,7 +107,7 @@
                   <span class="thread__date">{{ comment.created | date }}</span>
                 </div>
                 <div
-                  *ngIf="comment.user.email === (userData | async)?.user?.email"
+                  *ngIf="comment.user.email === (userData | async)?.email"
                   class="thread__delete"
                 >
                   <svg

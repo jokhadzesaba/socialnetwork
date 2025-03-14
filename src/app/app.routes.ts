@@ -7,6 +7,7 @@ import { RoomComponent } from './room/room.component';
 import { RoomFormComponent } from './room-form/room-form.component';
 import { SearchTopicsComponent } from './search-topics/search-topics.component';
 import { DeletePageComponent } from './delete-page/delete-page.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 export const routes: Routes = [
   {path:'', redirectTo:'feed',pathMatch:'full'},
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'searchTopic', component: SearchTopicsComponent },
   { path: 'deletePage', component: DeletePageComponent },
+  { path: 'update-profile', component: UpdateUserComponent },
 ];
