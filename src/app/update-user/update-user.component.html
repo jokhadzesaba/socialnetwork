@@ -32,11 +32,13 @@
           </label>
           <label>
             <span>Bio</span>
-            <input formControlName="bio" />
+            <textarea  formControlName="bio" ></textarea>
+            
           </label>
           <div>
             <span>Profile Picture</span>
-            <a target="_blank"
+            
+            <a [href]="updateForm.getRawValue().img" target="_blank" 
               ><span>Current:</span> {{ updateForm.getRawValue().img }}</a
             >
             <input type="file" accept="image/*"  (change)="changeImg()"/>

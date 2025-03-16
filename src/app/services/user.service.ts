@@ -32,11 +32,6 @@ export class UserService {
     if (isPlatformBrowser(this.platformId)) {
       this.token = this.getToken();
       this.header = new HttpHeaders({ Authorization: `Token ${this.token}` });
-  
-      // Fetch user on startup if token exists
-      if (this.token) {
-        this.getSavedUser();
-      }
     }
   }
   savedUser() {
@@ -106,11 +101,12 @@ export class UserService {
     const token = this.getToken();
     return new HttpHeaders().set('Authorization', `Token ${token}`);
   }
-  getSavedUser() {
+  userGetter() {
     if (this.isAuthenticated()) {
-      this.getUserData().subscribe(((res:User)=>{
-        this.userData.next(res)
-      }));
+      this.getUserData().subscribe((res: any) => {
+        const user = res.user ? res.user : res;
+        this.userData.next(user);
+      });
     }
   }
 }

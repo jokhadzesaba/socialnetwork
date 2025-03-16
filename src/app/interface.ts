@@ -26,7 +26,7 @@ export interface UserData {
 
 export interface Message {
   id: number;
-  user: User; // Simplified user data
+  user: User; 
   body: string;
   roomPhoto:string;
   created: string;

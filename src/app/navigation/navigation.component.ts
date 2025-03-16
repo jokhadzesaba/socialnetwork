@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { User, UserData } from '../interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { ApiService } from '../services/api.service';
 })
 export class NavigationComponent implements OnInit {
   public userData!: Observable<User>;
+  public user?:User 
   public searchParam = '';
   showSettings = false;
   constructor(
@@ -31,12 +32,7 @@ export class NavigationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userData = this.userService.getUser();
-    this.userService.getUser().subscribe(res=>{
-      console.log(res);
-      
-    })
-    
+    this.userData = this.userService.getUser()
   }
   settingsButtons() {
     this.showSettings = !this.showSettings;
@@ -64,5 +60,8 @@ export class NavigationComponent implements OnInit {
     localStorage.removeItem('user');
     this.showSettings = false;
     this.cd.detectChanges();
+  }
+  clickSettings(){
+    this.showSettings = false
   }
 }

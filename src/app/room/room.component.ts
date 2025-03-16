@@ -39,7 +39,6 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoomInfo();
-    this.userService.savedUser();
     this.userData = this.userService.getUser();
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);

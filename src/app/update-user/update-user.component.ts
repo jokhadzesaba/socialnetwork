@@ -16,6 +16,7 @@ import { UserService } from '../services/user.service';
 import { take, tap } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { User, UserWithoutId } from '../interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-user',
@@ -33,7 +34,8 @@ export class UpdateUserComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private cdr: ChangeDetectorRef,
-    private apiService:ApiService
+    private apiService:ApiService,
+    private router:Router
   ) {}
   ngOnInit(): void {
     this.userService
@@ -48,19 +50,31 @@ export class UpdateUserComponent implements OnInit {
           });
         })
       )
-      .subscribe();
+      .subscribe(()=>{
+        this.cdr.detectChanges()
+      });
   }
-  // Handle image change
   changeImg(): void {
-    const fileInput = (document.querySelector('input[type="file"]') as HTMLInputElement);
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
-      this.updateForm?.patchValue({'img':fileInput.files[0]});
-      this.cdr.detectChanges()
+      const file = fileInput.files[0];
+      this.updateForm?.patchValue({ img: file });
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const imgPreview = document.getElementById('img-preview') as HTMLImageElement;
+        if (imgPreview) {
+          imgPreview.src = event.target.result;
+        }
+      };
+      reader.readAsDataURL(file);
     }
-  } 
+  }
   update(){
     const formValues = this.updateForm?.getRawValue();
-    const data :UserWithoutId= {name:formValues.name,email:formValues.email,bio:formValues.bio,avatar:formValues.img}
+    const data :UserWithoutId= {name:formValues.name,email:formValues.email,bio:formValues.bio,avatar:formValues.img}    
+    this.router.navigate(['/deletePage'], { 
+      queryParams: { data: data, message: 'Profile?' } 
+    });
     this.apiService.updateUser(data).subscribe()    
 
   }
