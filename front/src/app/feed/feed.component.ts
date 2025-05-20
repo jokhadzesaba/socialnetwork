@@ -20,11 +20,17 @@ export class FeedComponent implements OnInit {
   length = 0;
   @Input() showTopicsAndActivity = true;
   @Input() selectedProfileFeed?: number;
+  expandedRoomIds = new Set<number>();
 
   constructor(
-    private apiService: ApiService, 
+    private apiService: ApiService,
     private userService: UserService
   ) {}
+  isLongDescription(description: string): boolean {
+    
+    return description.trim().split('').length > 200;
+  }
+
 
   ngOnInit(): void {
     if (this.selectedProfileFeed) {

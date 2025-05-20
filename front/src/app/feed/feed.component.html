@@ -42,14 +42,17 @@
       </div>
       <div class="roomListRoom__content">
         <a [routerLink]="['/room', room.id]">{{ room.name }}</a>
+        <p *ngIf="isLongDescription(room.description)">
+          {{ room.description | slice : 0 : 200 }} <a [routerLink]="['/room', room.id]" >...See more</a>
+        </p>
+        <p *ngIf="!isLongDescription(room.description)">
+          {{ room.description | slice : 0 : 200 }}
+        </p>
         <img *ngIf="room.roomPhoto"
           [routerLink]="['/room', room.id]"
           [src]="room.roomPhoto"
           alt="img"
         />
-        <p>
-          {{ room.description | slice : 0 : 100 }}
-        </p>
       </div>
       <div class="roomListRoom__meta">
         <a href="" class="roomListRoom__joined">
